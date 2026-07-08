@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بصراحة | ادخل بصدق</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@500;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1F3B; --ink-2:#252b52; --parchment:#F3EADA; --parchment-2:#ece0cb;
+    --amber:#E8A33D; --teal:#3E7C7C; --paper-text:#2b2417; --ghost:#7c86c9;
+    --danger:#c0392b; --success:#2f7a4f;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Almarai', sans-serif; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(232,163,61,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 110%, rgba(62,124,124,0.12), transparent 60%),
+      var(--parchment);
+    padding:6vw 4vw;
+  }
+
+  .brand{ text-align:center; margin-bottom:1.8rem; }
+  .brand .mark{
+    font-family:'Markazi Text', serif; font-size:clamp(2.2rem, 6vw, 3rem); font-weight:700; color:var(--ink);
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .brand .mark::before{ content:""; width:10px; height:10px; border-radius:50%; background:var(--amber); display:inline-block; }
+  .brand .sub{ font-size:.9rem; color:#7a6f5b; margin-top:.35rem; }
+
+  .wrap{ width:100%; max-width:440px; }
+
+  .card{
+    width:100%; background:#fffdf9; border:1px solid #e6d9bd; border-radius:20px;
+    box-shadow:0 20px 50px -20px rgba(27,31,59,0.18); padding:2.4rem 2.2rem;
+  }
+
+  .tabs{ position:relative; display:flex; background:var(--parchment-2); border-radius:999px; padding:6px; margin-bottom:2rem; }
+  .tab-indicator{ position:absolute; top:6px; bottom:6px; width:calc(50% - 6px); right:6px; background:var(--ink); border-radius:999px; transition:transform .35s cubic-bezier(.65,0,.35,1); }
+  .tabs.signup .tab-indicator{ transform:translateX(calc(-100% - 0px)); }
+  .tab-btn{ flex:1; position:relative; z-index:2; background:none; border:none; padding:.85rem 1rem; font-family:'Almarai', sans-serif; font-weight:800; font-size:.95rem; color:var(--paper-text); cursor:pointer; border-radius:999px; transition:color .35s ease; }
+  .tab-btn.active{ color:var(--parchment); }
+
+  .form-title{ font-family:'Markazi Text', serif; font-size:1.9rem; font-weight:700; color:var(--paper-text); margin-bottom:.35rem; }
+  .form-desc{ font-size:.86rem; color:#6b6153; margin-bottom:1.5rem; line-height:1.7; }
+
+  .forms{ position:relative; overflow:hidden; }
+  form{ display:flex; flex-direction:column; gap:1rem; }
+  #signup-form{ position:absolute; top:0; left:0; width:100%; opacity:0; transform:translateX(-24px); pointer-events:none; transition:transform .4s cubic-bezier(.65,0,.35,1), opacity .3s ease; }
+  #login-form{ transition:transform .4s cubic-bezier(.65,0,.35,1), opacity .3s ease; }
+  .card.signup-mode #login-form{ opacity:0; transform:translateX(24px); pointer-events:none; position:absolute; top:0; left:0; width:100%; }
+  .card.signup-mode #signup-form{ opacity:1; transform:translateX(0); pointer-events:auto; position:relative; }
+
+  .field{ display:flex; flex-direction:column; gap:.4rem; }
+  label{ font-size:.82rem; font-weight:700; color:var(--paper-text); }
+  .input-wrap{ position:relative; display:flex; align-items:center; }
+  input{
+    width:100%; font-family:'Almarai', sans-serif; padding:.9rem 1rem; border:1.5px solid #d8cbb0;
+    border-radius:10px; background:#fffdf9; font-size:.95rem; color:var(--paper-text); outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  input.has-toggle{ padding-left:2.8rem; }
+  input:focus{ border-color:var(--teal); box-shadow:0 0 0 3px rgba(62,124,124,0.15); }
+  input::placeholder{ color:#b3a68e; }
+  .field-error{ font-size:.78rem; color:var(--danger); min-height:1rem; }
+
+  .eye-toggle{
+    position:absolute; left:.7rem; background:none; border:none; cursor:pointer; padding:4px;
+    color:#8a7f6a; display:flex; align-items:center; justify-content:center;
+  }
+  .eye-toggle:hover{ color:var(--teal); }
+  .eye-toggle svg{ width:20px; height:20px; }
+
+  .submit-btn{
+    margin-top:.4rem; padding:.95rem 1rem; background:var(--ink); color:var(--parchment); border:none;
+    border-radius:10px; font-family:'Almarai', sans-serif; font-weight:800; font-size:1rem; cursor:pointer;
+    transition:background .2s ease, transform .15s ease; display:flex; align-items:center; justify-content:center; gap:.5rem;
+  }
+  .submit-btn:hover{ background:var(--ink-2); transform:translateY(-1px); }
+  .submit-btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
+
+  .spinner{ width:16px; height:16px; border:2.5px solid rgba(243,234,218,0.35); border-top-color:var(--parchment); border-radius:50%; animation:spin .7s linear infinite; display:none; }
+  .submit-btn.loading .spinner{ display:inline-block; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .hint{ text-align:center; font-size:.82rem; color:#8a7f6a; margin-top:1.3rem; }
+  .hint a{ color:var(--teal); font-weight:700; text-decoration:none; cursor:pointer; }
+  .hint a:hover{ text-decoration:underline; }
+
+  .banner{
+    display:none; align-items:flex-start; gap:.6rem; padding:.85rem 1rem; border-radius:10px;
+    font-size:.85rem; line-height:1.6; margin-bottom:1.2rem;
+  }
+  .banner.show{ display:flex; }
+  .banner.error{ background:#fbeaea; color:var(--danger); border:1px solid #f0c9c4; }
+  .banner.success{ background:#e9f5ee; color:var(--success); border:1px solid #c7e6d4; }
+
+  .dash{ display:none; }
+  .dash.show{ display:block; }
+  .dash .form-title{ margin-bottom:.6rem; }
+  .link-box{
+    display:flex; align-items:center; gap:.5rem; background:#fdf9f1; border:1.5px solid #d8cbb0;
+    border-radius:10px; padding:.7rem .9rem; margin:1rem 0 1.4rem;
+  }
+  .link-box input{ border:none; background:none; padding:0; flex:1; font-size:.85rem; color:var(--ink-2); }
+  .copy-btn{
+    background:var(--teal); color:#fff; border:none; padding:.55rem .9rem; border-radius:8px;
+    font-family:'Almarai', sans-serif; font-weight:700; font-size:.8rem; cursor:pointer; white-space:nowrap;
+  }
+  .copy-btn:hover{ background:#336868; }
+  .logout-btn{
+    background:none; border:1.5px solid var(--ink); color:var(--ink); padding:.8rem 1rem; border-radius:10px;
+    font-family:'Almarai', sans-serif; font-weight:700; font-size:.9rem; cursor:pointer; width:100%;
+  }
+  .logout-btn:hover{ background:var(--ink); color:var(--parchment); }
+
+  .footer-note{ text-align:center; font-size:.78rem; color:#a89a7e; margin-top:1.6rem; }
+
+  @media (max-width:480px){
+    .card{ padding:1.8rem 1.4rem; border-radius:16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="brand">
+    <div class="mark">بصراحة</div>
+    <p class="sub">قول رأيك بصدق... من غير ما حد يعرف مين قال</p>
+  </div>
+
+  <div class="card" id="card">
+
+    <div id="auth-view">
+      <div class="tabs" id="tabs">
+        <div class="tab-indicator"></div>
+        <button class="tab-btn active" id="btn-login" type="button">تسجيل الدخول</button>
+        <button class="tab-btn" id="btn-signup" type="button">حساب جديد</button>
+      </div>
+
+      <div id="banner" class="banner"></div>
+
+      <div class="forms">
+        <form id="login-form" novalidate>
+          <div class="form-title">أهلاً بيك تاني</div>
+          <p class="form-desc">ادخل بحسابك عشان تقرأ رسايلك وترد عليها.</p>
+
+          <div class="field">
+            <label for="login-username">اسم المستخدم</label>
+            <input id="login-username" type="text" placeholder="اسم المستخدم" autocomplete="username" required>
+            <span class="field-error" id="err-login-username"></span>
+          </div>
+
+          <div class="field">
+            <label for="login-password">كلمة المرور</label>
+            <div class="input-wrap">
+              <input id="login-password" class="has-toggle" type="password" placeholder="••••••••" autocomplete="current-password" required>
+              <button type="button" class="eye-toggle" data-target="login-password" aria-label="إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-login-password"></span>
+          </div>
+
+          <button class="submit-btn" type="submit"><span class="spinner"></span><span class="btn-text">دخول</span></button>
+        </form>
+
+        <form id="signup-form" novalidate>
+          <div class="form-title">ابدأ من هنا</div>
+          <p class="form-desc">اعمل حساب وهيتعمل لك رابط بصراحة خاص باسم المستخدم بتاعك.</p>
+
+          <div class="field">
+            <label for="signup-username">اسم المستخدم</label>
+            <input id="signup-username" type="text" placeholder="حروف إنجليزية وأرقام و _ فقط" autocomplete="username" required>
+            <span class="field-error" id="err-signup-username"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-email">البريد الإلكتروني</label>
+            <input id="signup-email" type="email" placeholder="example@email.com" autocomplete="email" required>
+            <span class="field-error" id="err-signup-email"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-password">كلمة المرور</label>
+            <div class="input-wrap">
+              <input id="signup-password" class="has-toggle" type="password" placeholder="٨ أحرف على الأقل" autocomplete="new-password" required>
+              <button type="button" class="eye-toggle" data-target="signup-password" aria-label="إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-signup-password"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-confirm">تأكيد كلمة المرور</label>
+            <div class="input-wrap">
+              <input id="signup-confirm" class="has-toggle" type="password" placeholder="أعد كتابة كلمة المرور" autocomplete="new-password" required>
+              <button type="button" class="eye-toggle" data-target="signup-confirm" aria-label="إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-signup-confirm"></span>
+          </div>
+
+          <button class="submit-btn" type="submit"><span class="spinner"></span><span class="btn-text">إنشاء الحساب</span></button>
+        </form>
+      </div>
+
+      <p class="hint" id="hint">لسه معندكش حساب؟ <a id="link-signup">سجل دلوقتي</a></p>
+    </div>
+
+    <div id="dash" class="dash">
+      <div class="form-title">أهلاً <span id="dash-username"></span> 👋</div>
+      <p class="form-desc">ده رابط بصراحة الخاص بيك. شاركه مع أصحابك عشان يبعتولك آراء صريحة من غير أسماء.</p>
+      <div class="link-box">
+        <input id="dash-link" type="text" readonly>
+        <button class="copy-btn" id="copy-link-btn">نسخ</button>
+      </div>
+      <button class="logout-btn" id="logout-btn">تسجيل الخروج</button>
+    </div>
+
+  </div>
+
+  <p class="footer-note">آلاف الرسائل الصادقة بتتبعت كل يوم — من غير أسماء</p>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylEYuzrWsOn5EyTAZwslrD-yqQl7EU_pgkzZUfUt19KNtOQLmyaHP_-tUbYCtsoqbFoA/exec";
+
+const card = document.getElementById('card');
+const tabs = document.getElementById('tabs');
+const btnLogin = document.getElementById('btn-login');
+const btnSignup = document.getElementById('btn-signup');
+const hint = document.getElementById('hint');
+const banner = document.getElementById('banner');
+const authView = document.getElementById('auth-view');
+const dash = document.getElementById('dash');
+
+function showSignup(){
+  card.classList.add('signup-mode');
+  tabs.classList.add('signup');
+  btnLogin.classList.remove('active');
+  btnSignup.classList.add('active');
+  hint.innerHTML = 'عندك حساب بالفعل؟ <a id="link-login">سجل دخولك</a>';
+  document.getElementById('link-login').addEventListener('click', showLogin);
+  hideBanner();
+}
+function showLogin(){
+  card.classList.remove('signup-mode');
+  tabs.classList.remove('signup');
+  btnSignup.classList.remove('active');
+  btnLogin.classList.add('active');
+  hint.innerHTML = 'لسه معندكش حساب؟ <a id="link-signup">سجل دلوقتي</a>';
+  document.getElementById('link-signup').addEventListener('click', showSignup);
+  hideBanner();
+}
+btnLogin.addEventListener('click', showLogin);
+btnSignup.addEventListener('click', showSignup);
+document.getElementById('link-signup').addEventListener('click', showSignup);
+
+function showBanner(message, type){
+  banner.textContent = message;
+  banner.className = 'banner show ' + type;
+}
+function hideBanner(){ banner.className = 'banner'; }
+
+document.querySelectorAll('.eye-toggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const targetId = btn.getAttribute('data-target');
+    const input = document.getElementById(targetId);
+    const openIcon = btn.querySelector('.eye-open');
+    const closedIcon = btn.querySelector('.eye-closed');
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    openIcon.style.display = isPassword ? 'none' : 'block';
+    closedIcon.style.display = isPassword ? 'block' : 'none';
+    btn.setAttribute('aria-label', isPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور');
+  });
+});
+
+function clearFieldErrors(prefix){
+  document.querySelectorAll(`[id^="err-${prefix}"]`).forEach(el => el.textContent = '');
+}
+function setFieldError(id, msg){ document.getElementById('err-' + id).textContent = msg; }
+
+function setLoading(form, isLoading){
+  const btn = form.querySelector('.submit-btn');
+  btn.disabled = isLoading;
+  btn.classList.toggle('loading', isLoading);
+}
+
+async function callScript(payload){
+  if(!SCRIPT_URL || SCRIPT_URL.indexOf('PUT_YOUR') !== -1){
+    throw new Error('لازم تحط رابط Google Apps Script الأول في متغير SCRIPT_URL جوه الكود.');
+  }
+  const res = await fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  });
+  if(!res.ok){ throw new Error('تعذر الاتصال بالخادم (' + res.status + ')'); }
+  return res.json();
+}
+
+function saveSession(username, link){
+  localStorage.setItem('bsaraha_user', JSON.stringify({ username, link }));
+}
+function getSession(){
+  try{ return JSON.parse(localStorage.getItem('bsaraha_user')); } catch(e){ return null; }
+}
+function clearSession(){ localStorage.removeItem('bsaraha_user'); }
+
+function showDash(username, link){
+  authView.style.display = 'none';
+  dash.classList.add('show');
+  document.getElementById('dash-username').textContent = username;
+  document.getElementById('dash-link').value = link;
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  hideBanner();
+  clearFieldErrors('login');
+
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  let valid = true;
+  if(!username){ setFieldError('login-username', 'اكتب اسم المستخدم'); valid = false; }
+  if(!password){ setFieldError('login-password', 'اكتب كلمة المرور'); valid = false; }
+  if(!valid) return;
+
+  const form = e.target;
+  setLoading(form, true);
+  try{
+    const result = await callScript({ action:'login', username, password });
+    if(result.success){
+      saveSession(result.username, result.link);
+      showDash(result.username, result.link);
+    } else {
+      showBanner(result.message || 'اسم المستخدم أو كلمة المرور غلط', 'error');
+    }
+  } catch(err){
+    showBanner(err.message, 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+document.getElementById('signup-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  hideBanner();
+  clearFieldErrors('signup');
+
+  const username = document.getElementById('signup-username').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-confirm').value;
+
+  let valid = true;
+  if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){
+    setFieldError('signup-username', 'اسم المستخدم: حروف إنجليزية وأرقام و _ فقط، من 3 إلى 20 حرف');
+    valid = false;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    setFieldError('signup-email', 'اكتب بريد إلكتروني صحيح');
+    valid = false;
+  }
+  if(password.length < 8){
+    setFieldError('signup-password', 'لازم تكون 8 أحرف على الأقل');
+    valid = false;
+  }
+  if(password !== confirm){
+    setFieldError('signup-confirm', 'كلمة المرور وتأكيدها مش متطابقين');
+    valid = false;
+  }
+  if(!valid) return;
+
+  const form = e.target;
+  setLoading(form, true);
+  try{
+    const result = await callScript({ action:'signup', username, email, password, confirmPassword:confirm });
+    if(result.success){
+      saveSession(result.username, result.link);
+      showDash(result.username, result.link);
+    } else {
+      showBanner(result.message || 'حصل خطأ أثناء إنشاء الحساب', 'error');
+    }
+  } catch(err){
+    showBanner(err.message, 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+document.getElementById('copy-link-btn').addEventListener('click', ()=>{
+  const input = document.getElementById('dash-link');
+  input.select();
+  input.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(input.value).then(()=>{
+    const btn = document.getElementById('copy-link-btn');
+    const original = btn.textContent;
+    btn.textContent = 'اتنسخ ✓';
+    setTimeout(()=> btn.textContent = original, 1500);
+  });
+});
+
+document.getElementById('logout-btn').addEventListener('click', ()=>{
+  clearSession();
+  dash.classList.remove('show');
+  authView.style.display = 'block';
+  showLogin();
+  document.getElementById('login-form').reset();
+});
+
+(function initSession(){
+  const session = getSession();
+  if(session && session.username && session.link){
+    showDash(session.username, session.link);
+  }
+})();
+</script>
+
+</body>
+</html>
