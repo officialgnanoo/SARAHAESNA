@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>بصراحة | ادخل بصدق</title>
+<meta property="og:title" content="بصراحة — قول رأيك بصدق">
+<meta property="og:description" content="ابعت وابعتلك رسائل صريحة من غير ما حد يعرف مين قال إيه">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://officialgnanoo.github.io/SARAHAESNA/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="بصراحة — قول رأيك بصدق">
+<meta name="twitter:description" content="ابعت وابعتلك رسائل صريحة من غير ما حد يعرف مين قال إيه">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@500;600;700&family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1F3B; --ink-2:#252b52; --parchment:#F3EADA; --parchment-2:#ece0cb;
+    --amber:#E8A33D; --teal:#3E7C7C; --paper-text:#2b2417; --ghost:#7c86c9;
+    --danger:#c0392b; --success:#2f7a4f; --border:#e6d9bd;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Almarai', sans-serif; min-height:100vh; display:flex; align-items:flex-start; justify-content:center;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(232,163,61,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 110%, rgba(62,124,124,0.12), transparent 60%),
+      var(--parchment);
+    padding:6vw 4vw;
+  }
+
+  .brand{ text-align:center; margin-bottom:1.8rem; }
+  .brand .mark{
+    font-family:'Markazi Text', serif; font-size:clamp(2.2rem, 6vw, 3rem); font-weight:700; color:var(--ink);
+    display:inline-flex; align-items:center; gap:.5rem;
+  }
+  .brand .mark::before{ content:""; width:10px; height:10px; border-radius:50%; background:var(--amber); display:inline-block; }
+  .brand .sub{ font-size:.9rem; color:#7a6f5b; margin-top:.35rem; }
+
+  .wrap{ width:100%; max-width:440px; margin:0 auto; }
+  .wrap.wide{ max-width:640px; }
+
+  .card{
+    width:100%; background:#fffdf9; border:1px solid var(--border); border-radius:20px;
+    box-shadow:0 20px 50px -20px rgba(27,31,59,0.18); padding:2.4rem 2.2rem;
+  }
+
+  .tabs{ position:relative; display:flex; background:var(--parchment-2); border-radius:999px; padding:6px; margin-bottom:2rem; }
+  .tab-indicator{ position:absolute; top:6px; bottom:6px; width:calc(50% - 6px); right:6px; background:var(--ink); border-radius:999px; transition:transform .35s cubic-bezier(.65,0,.35,1); }
+  .tabs.signup .tab-indicator{ transform:translateX(calc(-100% - 0px)); }
+  .tab-btn{ flex:1; position:relative; z-index:2; background:none; border:none; padding:.85rem 1rem; font-family:'Almarai', sans-serif; font-weight:800; font-size:.95rem; color:var(--paper-text); cursor:pointer; border-radius:999px; transition:color .35s ease; }
+  .tab-btn.active{ color:var(--parchment); }
+
+  .form-title{ font-family:'Markazi Text', serif; font-size:1.9rem; font-weight:700; color:var(--paper-text); margin-bottom:.35rem; }
+  .form-desc{ font-size:.86rem; color:#6b6153; margin-bottom:1.5rem; line-height:1.7; }
+
+  .forms{ position:relative; overflow:hidden; }
+  form{ display:flex; flex-direction:column; gap:1rem; }
+  #signup-form{ position:absolute; top:0; left:0; width:100%; opacity:0; transform:translateX(-24px); pointer-events:none; transition:transform .4s cubic-bezier(.65,0,.35,1), opacity .3s ease; }
+  #login-form{ transition:transform .4s cubic-bezier(.65,0,.35,1), opacity .3s ease; }
+  .card.signup-mode #login-form{ opacity:0; transform:translateX(24px); pointer-events:none; position:absolute; top:0; left:0; width:100%; }
+  .card.signup-mode #signup-form{ opacity:1; transform:translateX(0); pointer-events:auto; position:relative; }
+
+  .field{ display:flex; flex-direction:column; gap:.4rem; }
+  label{ font-size:.82rem; font-weight:700; color:var(--paper-text); }
+  .input-wrap{ position:relative; display:flex; align-items:center; }
+  input, textarea{
+    width:100%; font-family:'Almarai', sans-serif; padding:.9rem 1rem; border:1.5px solid #d8cbb0;
+    border-radius:10px; background:#fffdf9; font-size:.95rem; color:var(--paper-text); outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  input.has-toggle{ padding-left:2.8rem; }
+  input:focus, textarea:focus{ border-color:var(--teal); box-shadow:0 0 0 3px rgba(62,124,124,0.15); }
+  input::placeholder, textarea::placeholder{ color:#b3a68e; }
+  .field-error{ font-size:.78rem; color:var(--danger); min-height:1rem; }
+  .field-hint{ font-size:.78rem; min-height:1rem; display:block; font-weight:700; }
+  .field-hint.checking{ color:#8a7f6a; }
+  .field-hint.available{ color:var(--success); }
+  .field-hint.taken{ color:var(--danger); }
+
+  .username-link-box{
+    display:flex; align-items:stretch; border:1.5px solid #d8cbb0; border-radius:10px; overflow:hidden;
+    background:#fffdf9; transition:border-color .2s ease, box-shadow .2s ease;
+    direction:ltr; /* يخلي اللينك على الشمال واسم المستخدم بعده يكمل نفس السطر */
+  }
+  .username-link-box:focus-within{ border-color:var(--teal); box-shadow:0 0 0 3px rgba(62,124,124,0.15); }
+  .username-link-prefix{
+    background:var(--parchment-2); color:#6b6153; font-size:.72rem; padding:.9rem .7rem; white-space:nowrap;
+    display:flex; align-items:center; border-right:1px solid #d8cbb0; flex-shrink:0;
+  }
+  .username-link-box input{ border:none; border-radius:0; flex:1; min-width:0; text-align:left; }
+  .username-link-box input:focus{ box-shadow:none; }
+  @media (max-width:420px){
+    .username-link-prefix{ font-size:.62rem; padding:.9rem .5rem; }
+  }
+
+  .eye-toggle{
+    position:absolute; left:.7rem; background:none; border:none; cursor:pointer; padding:4px;
+    color:#8a7f6a; display:flex; align-items:center; justify-content:center;
+  }
+  .eye-toggle:hover{ color:var(--teal); }
+  .eye-toggle svg{ width:20px; height:20px; }
+
+  .submit-btn{
+    margin-top:.4rem; padding:.95rem 1rem; background:var(--ink); color:var(--parchment); border:none;
+    border-radius:10px; font-family:'Almarai', sans-serif; font-weight:800; font-size:1rem; cursor:pointer;
+    transition:background .2s ease, transform .15s ease; display:flex; align-items:center; justify-content:center; gap:.5rem;
+  }
+  .submit-btn:hover{ background:var(--ink-2); transform:translateY(-1px); }
+  .submit-btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
+
+  .spinner{ width:16px; height:16px; border:2.5px solid rgba(243,234,218,0.35); border-top-color:var(--parchment); border-radius:50%; animation:spin .7s linear infinite; display:none; }
+  .submit-btn.loading .spinner{ display:inline-block; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .hint{ text-align:center; font-size:.82rem; color:#8a7f6a; margin-top:1.3rem; }
+  .hint a{ color:var(--teal); font-weight:700; text-decoration:none; cursor:pointer; }
+  .hint a:hover{ text-decoration:underline; }
+
+  .banner{
+    display:none; align-items:flex-start; gap:.6rem; padding:.85rem 1rem; border-radius:10px;
+    font-size:.85rem; line-height:1.6; margin-bottom:1.2rem;
+  }
+  .banner.show{ display:flex; }
+  .banner.error{ background:#fbeaea; color:var(--danger); border:1px solid #f0c9c4; }
+  .banner.success{ background:#e9f5ee; color:var(--success); border:1px solid #c7e6d4; }
+
+  .dash{ display:none; }
+  .dash.show{ display:block; }
+
+  .link-box{
+    display:flex; align-items:center; gap:.5rem; background:#fdf9f1; border:1.5px solid #d8cbb0;
+    border-radius:10px; padding:.7rem .9rem; margin:0 0 1.4rem;
+  }
+  .link-box input{ border:none; background:none; padding:0; flex:1; font-size:.85rem; color:var(--ink-2); }
+  .visit-count-text{ font-size:.78rem; color:#8a7f6a; margin:-.9rem 0 1.3rem; display:flex; align-items:center; gap:.3rem; }
+  .visit-count-text svg{ width:14px; height:14px; }
+  .copy-btn{
+    background:var(--teal); color:#fff; border:none; padding:.55rem .9rem; border-radius:8px;
+    font-family:'Almarai', sans-serif; font-weight:700; font-size:.8rem; cursor:pointer; white-space:nowrap; flex-shrink:0;
+  }
+  .copy-btn:hover{ background:#336868; }
+  .logout-btn{
+    background:none; border:1.5px solid var(--danger); color:var(--danger); padding:.7rem 1.1rem; border-radius:10px;
+    font-family:'Almarai', sans-serif; font-weight:700; font-size:.88rem; cursor:pointer;
+  }
+  .logout-btn:hover{ background:var(--danger); color:#fff; }
+
+  .footer-note{ text-align:center; font-size:.78rem; color:#a89a7e; margin-top:1.6rem; }
+
+  /* ---------- Dashboard topbar ---------- */
+  .dash-topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:1rem;
+    padding-bottom:1.2rem; margin-bottom:1.4rem; border-bottom:1px solid var(--border);
+    flex-wrap:wrap;
+  }
+  .dash-who{ display:flex; align-items:center; gap:.7rem; min-width:0; }
+  .avatar{
+    width:44px; height:44px; border-radius:50%; background:var(--ink); color:var(--parchment);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.05rem;
+    flex-shrink:0; overflow:hidden; border:2px solid var(--amber);
+  }
+  .avatar img{ width:100%; height:100%; object-fit:cover; }
+  .dash-who-text{ min-width:0; }
+  .dash-who-name{ font-weight:800; color:var(--paper-text); font-size:.98rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dash-who-tag{ font-size:.75rem; color:#8a7f6a; }
+
+  .dash-nav{ display:flex; gap:6px; background:var(--parchment-2); border-radius:999px; padding:5px; }
+  .dash-nav-btn{
+    background:none; border:none; padding:.6rem 1.1rem; border-radius:999px; cursor:pointer;
+    font-family:'Almarai', sans-serif; font-weight:800; font-size:.85rem; color:var(--paper-text);
+    transition:background .25s ease, color .25s ease; display:flex; align-items:center; gap:.4rem;
+  }
+  .dash-nav-btn.active{ background:var(--ink); color:var(--parchment); }
+  .dash-nav-btn svg{ width:16px; height:16px; }
+
+  .dash-view{ display:none; }
+  .dash-view.active{ display:block; }
+
+  /* ---------- Messages ---------- */
+  .msg-subtabs{ display:flex; gap:.5rem; margin-bottom:1.1rem; overflow-x:auto; }
+  .msg-subtab{
+    background:none; border:1.5px solid var(--border); color:#6b6153; padding:.5rem 1rem; border-radius:999px;
+    font-family:'Almarai', sans-serif; font-weight:700; font-size:.8rem; cursor:pointer; white-space:nowrap;
+    transition:all .2s ease; display:flex; align-items:center; gap:.35rem;
+  }
+  .msg-subtab.active{ background:var(--teal); border-color:var(--teal); color:#fff; }
+  .msg-subtab .count{ background:rgba(0,0,0,0.12); border-radius:999px; padding:.05rem .45rem; font-size:.72rem; }
+  .msg-subtab.active .count{ background:rgba(255,255,255,0.25); }
+
+  .compose-box{
+    background:#fdf9f1; border:1.5px dashed #d8cbb0; border-radius:14px; padding:1rem; margin-bottom:1.3rem;
+  }
+  .compose-box .form-desc{ margin-bottom:.8rem; }
+  .compose-row{ display:flex; gap:.6rem; flex-wrap:wrap; }
+  .compose-row input{ flex:1; min-width:140px; }
+  .compose-box textarea{ margin-top:.6rem; min-height:70px; resize:vertical; }
+  .compose-send-btn{
+    margin-top:.6rem; align-self:flex-end; background:var(--ink); color:var(--parchment); border:none;
+    padding:.65rem 1.2rem; border-radius:9px; font-family:'Almarai', sans-serif; font-weight:800; font-size:.85rem; cursor:pointer;
+  }
+  .compose-send-btn:hover{ background:var(--ink-2); }
+  .compose-send-btn:disabled{ opacity:.6; cursor:not-allowed; }
+
+  .msg-list{ display:none; flex-direction:column; gap:.75rem; }
+  .msg-list.active{ display:flex; }
+
+  .msg-card{
+    background:#fffdf9; border:1px solid var(--border); border-radius:14px; padding:1rem 1.1rem;
+    display:flex; flex-direction:column; gap:.55rem;
+  }
+  .msg-card-text{ font-size:.92rem; color:var(--paper-text); line-height:1.75; white-space:pre-wrap; word-break:break-word; }
+  .msg-card-meta{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; }
+  .msg-card-time{ font-size:.75rem; color:#a89a7e; }
+  .msg-card-to{ font-size:.75rem; color:var(--teal); font-weight:700; }
+  .msg-card-anon{ font-size:.75rem; color:#a89a7e; font-style:italic; }
+  .msg-card-actions{ display:flex; gap:.35rem; }
+  .icon-btn{
+    background:none; border:none; cursor:pointer; padding:5px; border-radius:8px; color:#a89a7e;
+    display:flex; align-items:center; justify-content:center; transition:background .15s ease, color .15s ease;
+  }
+  .icon-btn svg{ width:18px; height:18px; }
+  .icon-btn:hover{ background:var(--parchment-2); color:var(--paper-text); }
+  .icon-btn.fav.is-fav{ color:var(--amber); }
+  .icon-btn.fav.is-fav svg{ fill:var(--amber); }
+  .icon-btn.del:hover{ color:var(--danger); }
+
+  .msg-empty{
+    text-align:center; padding:2.4rem 1rem; color:#a89a7e; font-size:.88rem; display:flex;
+    flex-direction:column; align-items:center; gap:.6rem;
+  }
+  .msg-empty svg{ width:38px; height:38px; opacity:.5; }
+
+  .skeleton{ display:flex; flex-direction:column; gap:.75rem; }
+  .skeleton-line{ height:64px; border-radius:14px; background:linear-gradient(90deg, #f1e9d8 25%, #f7f1e4 37%, #f1e9d8 63%); background-size:400% 100%; animation:shimmer 1.4s ease infinite; }
+  @keyframes shimmer{ 0%{background-position:100% 0;} 100%{background-position:0 0;} }
+
+  /* ---------- Settings ---------- */
+  .settings-section{
+    border:1px solid var(--border); border-radius:14px; padding:1.3rem; margin-bottom:1.1rem; background:#fffdf9;
+  }
+  .settings-section h3{
+    font-family:'Markazi Text', serif; font-size:1.3rem; color:var(--paper-text); margin-bottom:.9rem; font-weight:700;
+  }
+  .settings-section.danger{ border-color:#f0c9c4; background:#fffaf9; }
+  .settings-section.danger h3{ color:var(--danger); }
+  .settings-section p.hint-text{ font-size:.8rem; color:#8a7f6a; margin-bottom:.9rem; line-height:1.7; }
+
+  .avatar-row{ display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap; }
+  .avatar-big{
+    width:76px; height:76px; border-radius:50%; background:var(--ink); color:var(--parchment);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.7rem;
+    overflow:hidden; border:3px solid var(--amber); flex-shrink:0;
+  }
+  .avatar-big img{ width:100%; height:100%; object-fit:cover; }
+  .upload-btn-label{
+    display:inline-flex; align-items:center; gap:.4rem; background:var(--teal); color:#fff; padding:.6rem 1rem;
+    border-radius:9px; font-family:'Almarai', sans-serif; font-weight:700; font-size:.82rem; cursor:pointer;
+  }
+  .upload-btn-label:hover{ background:#336868; }
+  .upload-btn-label svg{ width:16px; height:16px; }
+  .upload-hint{ font-size:.75rem; color:#a89a7e; margin-top:.4rem; }
+
+  /* ---------- صندوق الرسالة الموحد (نص + صورة + إيموجي في إطار واحد) ---------- */
+  .unified-message-box{
+    border:1.5px solid #d8cbb0; border-radius:12px; background:#fffdf9; overflow:hidden;
+    transition:border-color .2s ease, box-shadow .2s ease; text-align:right;
+  }
+  .unified-message-box:focus-within{ border-color:var(--teal); box-shadow:0 0 0 3px rgba(62,124,124,0.15); }
+  .unified-message-box textarea{
+    border:none !important; border-radius:0; min-height:110px; box-shadow:none !important; display:block; width:100%;
+  }
+  .unified-message-box textarea:focus{ box-shadow:none !important; border:none !important; }
+  .message-toolbar{
+    display:flex; align-items:center; justify-content:space-between; gap:.5rem;
+    padding:.45rem .6rem; border-top:1px solid var(--border); background:var(--parchment-2);
+  }
+  .message-toolbar-left{ display:flex; align-items:center; gap:.3rem; position:relative; }
+  .toolbar-icon-btn{
+    background:none; border:none; cursor:pointer; width:34px; height:34px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-size:1.15rem; color:#6b6153;
+    transition:background .15s ease; flex-shrink:0;
+  }
+  .toolbar-icon-btn:hover{ background:#e6d9bd; }
+  .toolbar-icon-btn svg{ width:18px; height:18px; }
+
+  .emoji-picker{
+    position:absolute; bottom:40px; right:0; background:#fffdf9; border:1px solid var(--border); border-radius:10px;
+    box-shadow:0 10px 30px -10px rgba(27,31,59,0.3); padding:.5rem; display:none;
+    grid-template-columns:repeat(6, 1fr); gap:.1rem; z-index:30; width:216px; max-height:180px; overflow-y:auto;
+  }
+  .emoji-picker.show{ display:grid; }
+  .emoji-picker button{
+    background:none; border:none; font-size:1.25rem; cursor:pointer; padding:.3rem; border-radius:6px; line-height:1;
+  }
+  .emoji-picker button:hover{ background:var(--parchment-2); }
+
+  .danger-btn{
+    background:none; border:1.5px solid var(--danger); color:var(--danger); padding:.75rem 1rem; border-radius:10px;
+    font-family:'Almarai', sans-serif; font-weight:800; font-size:.88rem; cursor:pointer; width:100%;
+  }
+  .danger-btn:hover{ background:var(--danger); color:#fff; }
+
+  .settings-footer{ display:flex; justify-content:flex-end; margin-top:1.6rem; }
+
+  .confirm-modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(27,31,59,0.45); z-index:50;
+    align-items:center; justify-content:center; padding:1.2rem;
+  }
+  .confirm-modal-overlay.show{ display:flex; }
+  .confirm-modal{
+    background:#fffdf9; border-radius:16px; padding:1.6rem; max-width:360px; width:100%;
+    box-shadow:0 20px 50px -15px rgba(27,31,59,0.3);
+  }
+  .confirm-modal h4{ font-family:'Markazi Text', serif; font-size:1.4rem; color:var(--danger); margin-bottom:.6rem; }
+  .confirm-modal p{ font-size:.85rem; color:#6b6153; line-height:1.7; margin-bottom:1rem; }
+  .confirm-modal-actions{ display:flex; gap:.6rem; }
+  .confirm-modal-actions button{ flex:1; padding:.7rem; border-radius:9px; font-family:'Almarai', sans-serif; font-weight:800; font-size:.85rem; cursor:pointer; border:none; }
+  .confirm-cancel{ background:var(--parchment-2); color:var(--paper-text); }
+  .confirm-cancel:hover{ background:#e0d3b6; }
+  .confirm-ok{ background:var(--danger); color:#fff; }
+  .confirm-ok:hover{ background:#a53326; }
+
+  @media (max-width:480px){
+    .card{ padding:1.8rem 1.4rem; border-radius:16px; }
+    .dash-topbar{ flex-direction:column; align-items:stretch; }
+    .dash-nav{ justify-content:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="page-wrap">
+  <div class="brand">
+    <div class="mark">بصراحة</div>
+    <p class="sub">قول رأيك بصدق... من غير ما حد يعرف مين قال</p>
+  </div>
+
+  <div class="card" id="card">
+
+    <div id="auth-view">
+      <div class="tabs" id="tabs">
+        <div class="tab-indicator"></div>
+        <button class="tab-btn active" id="btn-login" type="button">تسجيل الدخول</button>
+        <button class="tab-btn" id="btn-signup" type="button">حساب جديد</button>
+      </div>
+
+      <div id="banner" class="banner"></div>
+
+      <div class="forms">
+        <form id="login-form" novalidate>
+          <div class="form-title">أهلاً بيك تاني</div>
+          <p class="form-desc">ادخل بحسابك عشان تقرأ رسايلك وترد عليها.</p>
+
+          <div class="field">
+            <label for="login-username">اسم المستخدم</label>
+            <input id="login-username" type="text" placeholder="اسم المستخدم" autocomplete="username" required>
+            <span class="field-error" id="err-login-username"></span>
+          </div>
+
+          <div class="field">
+            <label for="login-password">كلمة المرور</label>
+            <div class="input-wrap">
+              <input id="login-password" class="has-toggle" type="password" placeholder="••••••••" autocomplete="current-password" required>
+              <button type="button" class="eye-toggle" data-target="login-password" aria-label="إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-login-password"></span>
+          </div>
+
+          <button class="submit-btn" type="submit"><span class="spinner"></span><span class="btn-text">دخول</span></button>
+        </form>
+
+        <form id="signup-form" novalidate>
+          <div class="form-title">ابدأ من هنا</div>
+          <p class="form-desc">اعمل حساب وهيتعمل لك رابط بصراحة خاص باسم المستخدم بتاعك.</p>
+
+          <div class="field">
+            <label for="signup-displayname">اسمك داخل الموقع</label>
+            <input id="signup-displayname" type="text" placeholder="الاسم اللي هيظهر للناس" maxlength="30" autocomplete="name" required>
+            <span class="field-hint" style="font-weight:400; color:#8a7f6a;">ده الاسم اللي هيظهر للشخص لو بعتله رسالة من حسابك (مش من الرابط المجهول)</span>
+            <span class="field-error" id="err-signup-displayname"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-username">اسم المستخدم</label>
+            <div class="username-link-box">
+              <span class="username-link-prefix">https://officialgnanoo.github.io/SARAHAESNA/</span>
+              <input id="signup-username" type="text" placeholder="اسم المستخدم" autocomplete="username" required>
+            </div>
+            <span class="field-hint" id="username-availability"></span>
+            <span class="field-error" id="err-signup-username"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-email">البريد الإلكتروني</label>
+            <input id="signup-email" type="email" placeholder="example@email.com" autocomplete="email" required>
+            <span class="field-error" id="err-signup-email"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-password">كلمة المرور</label>
+            <div class="input-wrap">
+              <input id="signup-password" class="has-toggle" type="password" placeholder="٨ أحرف على الأقل" autocomplete="new-password" required>
+              <button type="button" class="eye-toggle" data-target="signup-password" aria-label="إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-signup-password"></span>
+          </div>
+
+          <div class="field">
+            <label for="signup-confirm">تأكيد كلمة المرور</label>
+            <div class="input-wrap">
+              <input id="signup-confirm" class="has-toggle" type="password" placeholder="أعد كتابة كلمة المرور" autocomplete="new-password" required>
+              <button type="button" class="eye-toggle" data-target="signup-confirm" aria-label="إظهار كلمة المرور">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="field-error" id="err-signup-confirm"></span>
+          </div>
+
+          <button class="submit-btn" type="submit"><span class="spinner"></span><span class="btn-text">إنشاء الحساب</span></button>
+        </form>
+      </div>
+
+      <p class="hint" id="hint">لسه معندكش حساب؟ <a id="link-signup">سجل دلوقتي</a></p>
+    </div>
+
+    <!-- ============ الصفحة العامة (لما حد يفتح رابط شخص تاني) ============ -->
+    <div id="public-view" style="display:none;">
+      <div class="msg-empty" id="public-loading"><span>جاري التحميل...</span></div>
+
+      <div class="msg-empty" id="public-notfound" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        <span>😕 الحساب ده مش موجود</span>
+      </div>
+
+      <div id="public-content" style="display:none; max-width:420px; margin:0 auto; text-align:center;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:.7rem; margin-bottom:1.6rem;">
+          <div class="avatar-big" style="width:84px; height:84px; font-size:2rem;">
+            <span id="public-avatar-fallback"></span>
+            <img id="public-avatar-img" style="display:none;">
+          </div>
+          <div>
+            <div class="form-title" id="public-username-title" style="margin-bottom:.3rem; font-size:1.7rem;"></div>
+            <p class="form-desc" style="margin-bottom:0;">ابعتله رأيك بصراحة... من غير ما يعرف مين إنت</p>
+          </div>
+        </div>
+
+        <div id="public-banner" class="banner" style="text-align:right;"></div>
+
+        <div class="unified-message-box">
+          <textarea id="public-text" maxlength="800" placeholder="اكتب أي حاجة في بالك..."></textarea>
+          <img id="public-image-preview" style="display:none; width:100%; max-height:220px; border-top:1px solid var(--border); object-fit:cover;">
+          <div class="message-toolbar">
+            <div class="message-toolbar-left">
+              <button type="button" class="toolbar-icon-btn" id="public-emoji-btn" title="إيموجي">😊</button>
+              <div class="emoji-picker" id="public-emoji-picker"></div>
+              <label class="toolbar-icon-btn" for="public-image-input" title="إرفاق صورة">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.5-4.5a2 2 0 012.8 0L16 16"/><path d="M14 14l1.5-1.5a2 2 0 012.8 0L20 14"/><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="9" r="1.5"/></svg>
+              </label>
+              <input type="file" id="public-image-input" accept="image/*" style="display:none;">
+            </div>
+            <span id="public-image-name" style="font-size:.72rem; color:#8a7f6a;"></span>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:center; margin-top:1.3rem;">
+          <button class="submit-btn" id="public-send-btn" type="button" style="max-width:230px; width:100%;">
+            <span class="spinner" id="public-spinner"></span><span class="btn-text">إرسال بصراحة</span>
+          </button>
+        </div>
+
+        <p id="public-visit-count" style="text-align:left; font-size:.75rem; color:#a89a7e; margin-top:.9rem;"></p>
+      </div>
+
+      <p class="hint" style="margin-top:1.5rem; text-align:center;"><a id="public-back-link">↩ رجوع لتسجيل الدخول</a></p>
+    </div>
+
+    <div id="dash" class="dash">
+
+
+      <div class="dash-topbar">
+        <div class="dash-who">
+          <label class="avatar" id="topbar-avatar-label" title="غيّر صورتك من الإعدادات">
+            <span id="topbar-avatar-fallback"></span>
+            <img id="topbar-avatar-img" style="display:none">
+          </label>
+          <div class="dash-who-text">
+            <div class="dash-who-name" id="dash-username"></div>
+            <div class="dash-who-tag">أهلاً بيك 👋</div>
+          </div>
+        </div>
+        <div class="dash-nav">
+          <button class="dash-nav-btn active" data-view="messages" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v13H7l-3 3V4z"/></svg>
+            الرسائل
+          </button>
+          <button class="dash-nav-btn" data-view="compose" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            إرسال رسالة
+          </button>
+          <button class="dash-nav-btn" data-view="settings" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1 1.55V21a2 2 0 01-4 0v-.09a1.7 1.7 0 00-1-1.55 1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.7 1.7 0 00.34-1.87 1.7 1.7 0 00-1.55-1H3a2 2 0 010-4h.09a1.7 1.7 0 001.55-1 1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06a1.7 1.7 0 001.87.34H9a1.7 1.7 0 001-1.55V3a2 2 0 014 0v.09a1.7 1.7 0 001 1.55 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06a1.7 1.7 0 00-.34 1.87V9a1.7 1.7 0 001.55 1H21a2 2 0 010 4h-.09a1.7 1.7 0 00-1.55 1z"/></svg>
+            الإعدادات
+          </button>
+          <button class="dash-nav-btn" id="topbar-logout-btn" type="button" title="تسجيل الخروج">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+            تسجيل الخروج
+          </button>
+        </div>
+      </div>
+
+      <!-- ============ عرض الرسائل ============ -->
+      <div class="dash-view active" id="view-messages">
+
+        <div class="link-box">
+          <input id="dash-link" type="text" readonly>
+          <button class="copy-btn" id="copy-link-btn">نسخ الرابط</button>
+        </div>
+        <p class="visit-count-text" id="visit-count-text"></p>
+
+        <div class="msg-subtabs">
+          <button class="msg-subtab active" data-sub="received" type="button">المستلمة <span class="count" id="count-received">0</span></button>
+          <button class="msg-subtab" data-sub="favorites" type="button">المفضلة <span class="count" id="count-favorites">0</span></button>
+          <button class="msg-subtab" data-sub="sent" type="button">المرسلة <span class="count" id="count-sent">0</span></button>
+        </div>
+
+        <div class="msg-list active" id="list-received"></div>
+        <div class="msg-list" id="list-favorites"></div>
+        <div class="msg-list" id="list-sent"></div>
+      </div>
+
+      <!-- ============ إرسال رسالة ============ -->
+      <div class="dash-view" id="view-compose">
+        <div class="compose-box" style="margin-bottom:0;">
+          <p class="form-desc">عايز تبعت رأيك الصريح لحد تاني؟ اكتب اسم المستخدم بتاعه وابعتله — هيتبعت باسمك كإنك بعتها.</p>
+          <div class="compose-row" style="margin-bottom:.7rem;">
+            <input id="compose-to" type="text" placeholder="اسم المستخدم اللي هتبعتله">
+          </div>
+
+          <div class="unified-message-box">
+            <textarea id="compose-text" maxlength="800" placeholder="اكتب رسالتك الصريحة هنا..."></textarea>
+            <img id="compose-image-preview" style="display:none; width:100%; max-height:220px; border-top:1px solid var(--border); object-fit:cover;">
+            <div class="message-toolbar">
+              <div class="message-toolbar-left">
+                <button type="button" class="toolbar-icon-btn" id="compose-emoji-btn" title="إيموجي">😊</button>
+                <div class="emoji-picker" id="compose-emoji-picker"></div>
+                <label class="toolbar-icon-btn" for="compose-image-input" title="إرفاق صورة">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.5-4.5a2 2 0 012.8 0L16 16"/><path d="M14 14l1.5-1.5a2 2 0 012.8 0L20 14"/><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8" cy="9" r="1.5"/></svg>
+                </label>
+                <input type="file" id="compose-image-input" accept="image/*" style="display:none;">
+              </div>
+              <span id="compose-image-name" style="font-size:.72rem; color:#8a7f6a;"></span>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; margin-top:1.2rem;">
+            <button class="compose-send-btn" id="compose-send-btn" type="button" style="max-width:230px; width:100%;">إرسال</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ الإعدادات ============ -->
+      <div class="dash-view" id="view-settings">
+
+        <div class="settings-section">
+          <h3>صورة البروفايل</h3>
+          <div class="avatar-row">
+            <label class="avatar-big" id="settings-avatar-label">
+              <span id="settings-avatar-fallback"></span>
+              <img id="settings-avatar-img" style="display:none">
+            </label>
+            <div>
+              <label class="upload-btn-label" for="avatar-input">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+                رفع صورة جديدة
+              </label>
+              <input type="file" id="avatar-input" accept="image/*" style="display:none">
+              <p class="upload-hint">JPG أو PNG، مساحة أصغر من 3 ميجا</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>تغيير كلمة المرور</h3>
+          <form id="password-form" novalidate style="gap:.9rem;">
+            <div class="field">
+              <label for="current-password">كلمة المرور الحالية</label>
+              <div class="input-wrap">
+                <input id="current-password" class="has-toggle" type="password" placeholder="••••••••" autocomplete="current-password">
+                <button type="button" class="eye-toggle" data-target="current-password" aria-label="إظهار كلمة المرور">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+                </button>
+              </div>
+              <span class="field-error" id="err-current-password"></span>
+            </div>
+            <div class="field">
+              <label for="new-password">كلمة المرور الجديدة</label>
+              <div class="input-wrap">
+                <input id="new-password" class="has-toggle" type="password" placeholder="٨ أحرف على الأقل" autocomplete="new-password">
+                <button type="button" class="eye-toggle" data-target="new-password" aria-label="إظهار كلمة المرور">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+                </button>
+              </div>
+              <span class="field-error" id="err-new-password"></span>
+            </div>
+            <div class="field">
+              <label for="confirm-new-password">تأكيد كلمة المرور الجديدة</label>
+              <div class="input-wrap">
+                <input id="confirm-new-password" class="has-toggle" type="password" placeholder="أعد كتابة كلمة المرور الجديدة" autocomplete="new-password">
+                <button type="button" class="eye-toggle" data-target="confirm-new-password" aria-label="إظهار كلمة المرور">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-open"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-closed" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a20.6 20.6 0 015.06-5.94M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a20.7 20.7 0 01-3.22 4.36M1 1l22 22"/></svg>
+                </button>
+              </div>
+              <span class="field-error" id="err-confirm-new-password"></span>
+            </div>
+            <button class="submit-btn" type="submit" style="margin-top:0;"><span class="spinner"></span><span class="btn-text">حفظ كلمة المرور</span></button>
+          </form>
+        </div>
+
+        <div class="settings-section danger">
+          <h3>حذف الحساب</h3>
+          <p class="hint-text">حذف حسابك هيمسح كل رسايلك ورابطك الشخصي نهائيًا، والخطوة دي مفيهاش رجوع.</p>
+          <button class="danger-btn" id="delete-account-btn" type="button">حذف الحساب نهائيًا</button>
+        </div>
+
+        <div class="settings-footer">
+          <button class="logout-btn" id="logout-btn">تسجيل الخروج</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <p class="footer-note">آلاف الرسائل الصادقة بتتبعت كل يوم — من غير أسماء</p>
+  <p style="text-align:center; font-size:.68rem; color:#c9bd9f; margin-top:.4rem;">نسخة الواجهة: FRONTEND_V7-2026-07-09</p>
+</div>
+
+<!-- مودال تأكيد حذف الحساب -->
+<div class="confirm-modal-overlay" id="delete-modal-overlay">
+  <div class="confirm-modal">
+    <h4>متأكد إنك عايز تحذف حسابك؟</h4>
+    <p>هيتم حذف حسابك وكل رسايلك نهائيًا وميمكنش استرجاعها. اكتب كلمة المرور للتأكيد.</p>
+    <div class="field" style="margin-bottom:1rem;">
+      <input id="delete-confirm-password" type="password" placeholder="كلمة المرور">
+      <span class="field-error" id="err-delete-confirm-password"></span>
+    </div>
+    <div class="confirm-modal-actions">
+      <button class="confirm-cancel" id="delete-cancel-btn" type="button">إلغاء</button>
+      <button class="confirm-ok" id="delete-ok-btn" type="button">تأكيد الحذف</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbynBDdQ2u2Gi2bU_kh-W0A2IXguMK9lHtrHb7ED_WEk1qLUg_DLGY42nzfhYRcTSKGa/exec";
+const IMGBB_API_KEY = "70da390a22af7d2bb175bb823a671cd4";
+
+const card = document.getElementById('card');
+const tabs = document.getElementById('tabs');
+const btnLogin = document.getElementById('btn-login');
+const btnSignup = document.getElementById('btn-signup');
+const hint = document.getElementById('hint');
+const banner = document.getElementById('banner');
+const authView = document.getElementById('auth-view');
+const dash = document.getElementById('dash');
+const pageWrap = document.getElementById('page-wrap');
+
+let session = null; // { username, password, link, profilePic }
+let currentPublicUsername = null;
+let publicSelectedFile = null;
+let messagesData = { received: [], favorites: [], sent: [] };
+
+/* ---------------- تبديل تابات تسجيل الدخول / حساب جديد ---------------- */
+function showSignup(){
+  card.classList.add('signup-mode');
+  tabs.classList.add('signup');
+  btnLogin.classList.remove('active');
+  btnSignup.classList.add('active');
+  hint.innerHTML = 'عندك حساب بالفعل؟ <a id="link-login">سجل دخولك</a>';
+  document.getElementById('link-login').addEventListener('click', showLogin);
+  hideBanner();
+}
+function showLogin(){
+  card.classList.remove('signup-mode');
+  tabs.classList.remove('signup');
+  btnSignup.classList.remove('active');
+  btnLogin.classList.add('active');
+  hint.innerHTML = 'لسه معندكش حساب؟ <a id="link-signup">سجل دلوقتي</a>';
+  document.getElementById('link-signup').addEventListener('click', showSignup);
+  hideBanner();
+}
+btnLogin.addEventListener('click', showLogin);
+btnSignup.addEventListener('click', showSignup);
+document.getElementById('link-signup').addEventListener('click', showSignup);
+
+function showBanner(message, type){
+  banner.textContent = message;
+  banner.className = 'banner show ' + type;
+}
+function hideBanner(){ banner.className = 'banner'; }
+
+document.querySelectorAll('.eye-toggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const targetId = btn.getAttribute('data-target');
+    const input = document.getElementById(targetId);
+    const openIcon = btn.querySelector('.eye-open');
+    const closedIcon = btn.querySelector('.eye-closed');
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    openIcon.style.display = isPassword ? 'none' : 'block';
+    closedIcon.style.display = isPassword ? 'block' : 'none';
+    btn.setAttribute('aria-label', isPassword ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور');
+  });
+});
+
+function clearFieldErrors(prefix){
+  document.querySelectorAll(`[id^="err-${prefix}"]`).forEach(el => el.textContent = '');
+}
+function setFieldError(id, msg){ document.getElementById('err-' + id).textContent = msg; }
+
+function setLoading(form, isLoading){
+  const btn = form.querySelector('.submit-btn');
+  btn.disabled = isLoading;
+  btn.classList.toggle('loading', isLoading);
+}
+
+async function callScript(payload){
+  if(!SCRIPT_URL || SCRIPT_URL.indexOf('PUT_YOUR') !== -1){
+    throw new Error('لازم تحط رابط Google Apps Script الأول في متغير SCRIPT_URL جوه الكود.');
+  }
+  const controller = new AbortController();
+  const timeoutId = setTimeout(()=>controller.abort(), 20000); // 20 ثانية أقصى انتظار
+  let res;
+  try{
+    res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+      signal: controller.signal
+    });
+  } catch(err){
+    if(err.name === 'AbortError'){
+      throw new Error('السيرفر ماردش خلال وقت مناسب، حاول تاني');
+    }
+    throw new Error('تعذر الاتصال بالخادم، تأكد من اتصالك بالإنترنت');
+  } finally {
+    clearTimeout(timeoutId);
+  }
+  if(!res.ok){ throw new Error('تعذر الاتصال بالخادم (' + res.status + ')'); }
+  return res.json();
+}
+
+/* ---------------- الجلسة ---------------- */
+function saveSession(){
+  localStorage.setItem('bsaraha_user', JSON.stringify(session));
+}
+function getStoredSession(){
+  try{ return JSON.parse(localStorage.getItem('bsaraha_user')); } catch(e){ return null; }
+}
+function clearSession(){ localStorage.removeItem('bsaraha_user'); session = null; }
+
+/* ---------------- تهيئة الأفاتار (أول حرف من الاسم أو صورة حقيقية) ---------------- */
+function renderAvatar(){
+  const initial = (session.displayName || session.username || '?').charAt(0).toUpperCase();
+  const hasPic = session.profilePic && session.profilePic.trim() !== '';
+
+  document.getElementById('topbar-avatar-fallback').textContent = initial;
+  document.getElementById('settings-avatar-fallback').textContent = initial;
+
+  const topImg = document.getElementById('topbar-avatar-img');
+  const settingsImg = document.getElementById('settings-avatar-img');
+
+  if(hasPic){
+    topImg.src = session.profilePic; topImg.style.display = 'block';
+    settingsImg.src = session.profilePic; settingsImg.style.display = 'block';
+    document.getElementById('topbar-avatar-fallback').style.display = 'none';
+    document.getElementById('settings-avatar-fallback').style.display = 'none';
+  } else {
+    topImg.style.display = 'none'; settingsImg.style.display = 'none';
+    document.getElementById('topbar-avatar-fallback').style.display = 'block';
+    document.getElementById('settings-avatar-fallback').style.display = 'block';
+  }
+}
+
+function showDash(){
+  authView.style.display = 'none';
+  dash.classList.add('show');
+  pageWrap.classList.add('wide');
+  document.getElementById('dash-username').textContent = session.displayName || session.username;
+  document.getElementById('dash-link').value = session.link;
+  renderVisitCount();
+  renderAvatar();
+  loadMessages();
+}
+
+function renderVisitCount(){
+  const el = document.getElementById('visit-count-text');
+  const count = session.visitCount || 0;
+  el.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg> عدد زيارات رابطك: ${count}`;
+}
+
+/* ---------------- تبديل تابات الرسائل / الإرسال / الإعدادات ---------------- */
+document.querySelectorAll('.dash-nav-btn[data-view]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.dash-nav-btn[data-view]').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const view = btn.getAttribute('data-view');
+    document.querySelectorAll('.dash-view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-' + view).classList.add('active');
+  });
+});
+
+/* ---------------- تبديل تابات الرسائل الفرعية ---------------- */
+document.querySelectorAll('.msg-subtab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.msg-subtab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const sub = btn.getAttribute('data-sub');
+    document.querySelectorAll('.msg-list').forEach(l=>l.classList.remove('active'));
+    document.getElementById('list-' + sub).classList.add('active');
+  });
+});
+
+/* ---------------- تنسيق الوقت ---------------- */
+function formatTime(dateStr){
+  const d = new Date(dateStr);
+  if(isNaN(d.getTime())) return '';
+  return d.toLocaleString('ar-EG', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+}
+
+/* ---------------- عرض قوائم الرسائل ---------------- */
+const emptyStates = {
+  received: 'لا توجد رسائل بعد... شارك رابطك مع أصحابك 📨',
+  favorites: 'لا توجد رسائل بعد في المفضلة',
+  sent: 'لا توجد رسائل بعد'
+};
+
+function renderMessageList(containerId, items, type){
+  const container = document.getElementById(containerId);
+  if(!items || items.length === 0){
+    container.innerHTML = `<div class="msg-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v13H7l-3 3V4z"/></svg>
+      <span>${emptyStates[type] || 'مفيش رسايل هنا'}</span>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = items.map(item => {
+    const isReceivedLike = (type === 'received' || type === 'favorites');
+    const favClass = item.isFavorite ? 'is-fav' : '';
+    const favIconFill = item.isFavorite ? 'currentColor' : 'none';
+    const toLine = type === 'sent' ? `<span class="msg-card-to">إلى: ${escapeHtml(item.to)}</span>` : '';
+    const fromLine = (isReceivedLike && item.fromDisplayName)
+      ? `<span class="msg-card-to">من: ${escapeHtml(item.fromDisplayName)}</span>`
+      : (isReceivedLike ? `<span class="msg-card-anon">مجهول</span>` : '');
+
+    const favBtn = isReceivedLike ? `
+      <button class="icon-btn fav ${favClass}" data-action="fav" data-id="${item.id}" title="مفضلة">
+        <svg viewBox="0 0 24 24" fill="${favIconFill}" stroke="currentColor" stroke-width="2"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9 12 2"/></svg>
+      </button>` : '';
+
+    const deleteType = type === 'sent' ? 'sent' : 'received';
+    const imageHtml = item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="صورة مرفقة" style="max-width:100%; max-height:260px; border-radius:10px; margin-top:.5rem; object-fit:cover; display:block;">` : '';
+
+    return `<div class="msg-card" data-id="${item.id}">
+      <div class="msg-card-text">${escapeHtml(item.text)}${imageHtml}</div>
+      <div class="msg-card-meta">
+        <span class="msg-card-time">${toLine}${fromLine} ${formatTime(item.createdAt)}</span>
+        <div class="msg-card-actions">
+          ${favBtn}
+          <button class="icon-btn del" data-action="del" data-id="${item.id}" data-type="${deleteType}" title="حذف">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showSkeleton(){
+  ['list-received','list-favorites','list-sent'].forEach(id=>{
+    document.getElementById(id).innerHTML = `<div class="msg-empty">
+      <span>جاري تحميل الرسائل...</span>
+    </div>`;
+  });
+}
+
+async function loadMessages(){
+  showSkeleton();
+  try{
+    const result = await callScript({ action:'getMessages', username: session.username, password: session.password });
+    if(result.success){
+      messagesData = { received: result.received || [], favorites: result.favorites || [], sent: result.sent || [] };
+      let sessionChanged = false;
+      if(result.profilePic !== undefined && result.profilePic !== session.profilePic){
+        session.profilePic = result.profilePic; sessionChanged = true;
+      }
+      if(result.link && result.link !== session.link){
+        session.link = result.link;
+        document.getElementById('dash-link').value = session.link;
+        sessionChanged = true;
+      }
+      if(result.visitCount !== undefined && result.visitCount !== session.visitCount){
+        session.visitCount = result.visitCount;
+        renderVisitCount();
+        sessionChanged = true;
+      }
+      if(result.displayName && result.displayName !== session.displayName){
+        session.displayName = result.displayName;
+        sessionChanged = true;
+      }
+      if(sessionChanged){ saveSession(); renderAvatar(); }
+      refreshMessageViews();
+    } else {
+      showBanner(result.message || 'تعذر تحميل الرسائل', 'error');
+    }
+  } catch(err){
+    ['list-received','list-favorites','list-sent'].forEach(id=>{
+      document.getElementById(id).innerHTML = `<div class="msg-empty"><span>تعذر تحميل الرسائل، حاول تاني</span></div>`;
+    });
+  }
+}
+
+function refreshMessageViews(){
+  renderMessageList('list-received', messagesData.received, 'received');
+  renderMessageList('list-favorites', messagesData.favorites, 'favorites');
+  renderMessageList('list-sent', messagesData.sent, 'sent');
+  document.getElementById('count-received').textContent = messagesData.received.length;
+  document.getElementById('count-favorites').textContent = messagesData.favorites.length;
+  document.getElementById('count-sent').textContent = messagesData.sent.length;
+}
+
+/* تفويض أحداث الأزرار جوه بطاقات الرسائل */
+document.querySelectorAll('.msg-list').forEach(list=>{
+  list.addEventListener('click', async (e)=>{
+    const btn = e.target.closest('.icon-btn');
+    if(!btn) return;
+    const id = btn.getAttribute('data-id');
+    const action = btn.getAttribute('data-action');
+
+    if(action === 'fav'){
+      btn.disabled = true;
+      try{
+        const result = await callScript({ action:'toggleFavorite', username: session.username, password: session.password, id });
+        if(result.success){
+          [...messagesData.received, ...messagesData.favorites].forEach(m => { if(m.id === id) m.isFavorite = result.isFavorite; });
+          messagesData.favorites = messagesData.received.filter(m => m.isFavorite);
+          refreshMessageViews();
+        }
+      } finally { btn.disabled = false; }
+    }
+
+    if(action === 'del'){
+      const type = btn.getAttribute('data-type');
+      btn.disabled = true;
+      try{
+        const result = await callScript({ action:'deleteMessage', username: session.username, password: session.password, id, type });
+        if(result.success){
+          if(type === 'sent'){ messagesData.sent = messagesData.sent.filter(m => m.id !== id); }
+          else {
+            messagesData.received = messagesData.received.filter(m => m.id !== id);
+            messagesData.favorites = messagesData.favorites.filter(m => m.id !== id);
+          }
+          refreshMessageViews();
+        }
+      } finally { btn.disabled = false; }
+    }
+  });
+});
+
+/* ---------------- إرسال رسالة من داخل اللوحة ---------------- */
+let composeSelectedFile = null;
+
+document.getElementById('compose-image-input').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 5 * 1024 * 1024){
+    showBanner('الصورة أكبر من 5 ميجا', 'error');
+    e.target.value = '';
+    return;
+  }
+  composeSelectedFile = file;
+  document.getElementById('compose-image-name').textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    const preview = document.getElementById('compose-image-preview');
+    preview.src = reader.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('compose-send-btn').addEventListener('click', async ()=>{
+  const to = document.getElementById('compose-to').value.trim();
+  const text = document.getElementById('compose-text').value.trim();
+  hideBanner();
+
+  if(!to){ showBanner('اكتب اسم المستخدم اللي هتبعتله', 'error'); return; }
+  if(!text && !composeSelectedFile){ showBanner('اكتب رسالة أو ارفق صورة الأول', 'error'); return; }
+
+  const btn = document.getElementById('compose-send-btn');
+  btn.disabled = true; btn.textContent = 'جاري الإرسال...';
+  try{
+    let imageUrl = '';
+    if(composeSelectedFile){
+      imageUrl = await uploadToImgbb(composeSelectedFile);
+    }
+    const result = await callScript({
+      action:'sendMessage', to, text, imageUrl,
+      fromUsername: session.username, fromPassword: session.password
+    });
+    if(result.success){
+      showBanner('تم إرسال رسالتك بنجاح ✓', 'success');
+      document.getElementById('compose-to').value = '';
+      document.getElementById('compose-text').value = '';
+      document.getElementById('compose-image-preview').style.display = 'none';
+      document.getElementById('compose-image-name').textContent = '';
+      document.getElementById('compose-image-input').value = '';
+      composeSelectedFile = null;
+      loadMessages();
+    } else {
+      showBanner(result.message || 'تعذر إرسال الرسالة', 'error');
+    }
+  } catch(err){
+    showBanner(err.message, 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'إرسال';
+  }
+});
+
+/* ---------------- رفع صورة البروفايل ---------------- */
+document.getElementById('avatar-input').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 3 * 1024 * 1024){ showBanner('الصورة أكبر من 3 ميجا', 'error'); return; }
+
+  const reader = new FileReader();
+  reader.onload = async ()=>{
+    try{
+      const result = await callScript({
+        action:'updateProfilePicture', username: session.username, password: session.password,
+        imageBase64: reader.result, mimeType: file.type
+      });
+      if(result.success){
+        session.profilePic = result.profilePic;
+        saveSession();
+        renderAvatar();
+        showBanner('تم تحديث صورة البروفايل ✓', 'success');
+      } else {
+        showBanner(result.message || 'تعذر رفع الصورة', 'error');
+      }
+    } catch(err){
+      showBanner(err.message, 'error');
+    }
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ---------------- تغيير كلمة المرور ---------------- */
+document.getElementById('password-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  hideBanner();
+  clearFieldErrors('current-password'); clearFieldErrors('new-password'); clearFieldErrors('confirm-new-password');
+
+  const currentPassword = document.getElementById('current-password').value;
+  const newPassword = document.getElementById('new-password').value;
+  const confirmPassword = document.getElementById('confirm-new-password').value;
+
+  let valid = true;
+  if(!currentPassword){ setFieldError('current-password', 'اكتب كلمة المرور الحالية'); valid = false; }
+  if(newPassword.length < 8){ setFieldError('new-password', 'لازم تكون 8 أحرف على الأقل'); valid = false; }
+  if(newPassword !== confirmPassword){ setFieldError('confirm-new-password', 'كلمة المرور وتأكيدها مش متطابقين'); valid = false; }
+  if(!valid) return;
+
+  const form = e.target;
+  setLoading(form, true);
+  try{
+    const result = await callScript({
+      action:'changePassword', username: session.username,
+      currentPassword, newPassword, confirmPassword
+    });
+    if(result.success){
+      session.password = newPassword;
+      saveSession();
+      showBanner('تم تغيير كلمة المرور بنجاح ✓', 'success');
+      form.reset();
+    } else {
+      showBanner(result.message || 'تعذر تغيير كلمة المرور', 'error');
+    }
+  } catch(err){
+    showBanner(err.message, 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+/* ---------------- حذف الحساب ---------------- */
+const deleteModal = document.getElementById('delete-modal-overlay');
+document.getElementById('delete-account-btn').addEventListener('click', ()=>{
+  document.getElementById('delete-confirm-password').value = '';
+  setFieldError('delete-confirm-password', '');
+  deleteModal.classList.add('show');
+});
+document.getElementById('delete-cancel-btn').addEventListener('click', ()=>{
+  deleteModal.classList.remove('show');
+});
+document.getElementById('delete-ok-btn').addEventListener('click', async ()=>{
+  const password = document.getElementById('delete-confirm-password').value;
+  if(!password){ setFieldError('delete-confirm-password', 'اكتب كلمة المرور'); return; }
+
+  const btn = document.getElementById('delete-ok-btn');
+  btn.disabled = true; btn.textContent = 'جاري الحذف...';
+  try{
+    const result = await callScript({ action:'deleteAccount', username: session.username, password });
+    if(result.success){
+      deleteModal.classList.remove('show');
+      clearSession();
+      dash.classList.remove('show');
+      pageWrap.classList.remove('wide');
+      authView.style.display = 'block';
+      showLogin();
+      document.getElementById('login-form').reset();
+      showBanner('تم حذف حسابك بنجاح', 'success');
+    } else {
+      setFieldError('delete-confirm-password', result.message || 'كلمة المرور غلط');
+    }
+  } catch(err){
+    setFieldError('delete-confirm-password', err.message);
+  } finally {
+    btn.disabled = false; btn.textContent = 'تأكيد الحذف';
+  }
+});
+
+/* ---------------- تسجيل الدخول ---------------- */
+document.getElementById('login-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  hideBanner();
+  clearFieldErrors('login');
+
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value;
+
+  let valid = true;
+  if(!username){ setFieldError('login-username', 'اكتب اسم المستخدم'); valid = false; }
+  if(!password){ setFieldError('login-password', 'اكتب كلمة المرور'); valid = false; }
+  if(!valid) return;
+
+  const form = e.target;
+  setLoading(form, true);
+  try{
+    const result = await callScript({ action:'login', username, password });
+    if(result.success){
+      session = { username: result.username, password, link: result.link, profilePic: result.profilePic || '', visitCount: result.visitCount || 0, displayName: result.displayName || result.username };
+      saveSession();
+      showDash();
+    } else {
+      showBanner(result.message || 'اسم المستخدم أو كلمة المرور غلط', 'error');
+    }
+  } catch(err){
+    showBanner(err.message, 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+/* ---------------- التحقق الفوري من توفر اسم المستخدم أثناء الكتابة ---------------- */
+let usernameCheckTimer = null;
+let usernameCheckToken = 0;
+document.getElementById('signup-username').addEventListener('input', (e)=>{
+  const value = e.target.value.trim();
+  const hintEl = document.getElementById('username-availability');
+  clearTimeout(usernameCheckTimer);
+
+  if(!value){ hintEl.textContent = ''; hintEl.className = 'field-hint'; return; }
+
+  if(!/^[a-zA-Z0-9_]{3,20}$/.test(value)){
+    hintEl.textContent = 'حروف إنجليزية وأرقام و _ فقط، من 3 إلى 20 حرف';
+    hintEl.className = 'field-hint taken';
+    return;
+  }
+
+  hintEl.textContent = 'جاري التحقق...';
+  hintEl.className = 'field-hint checking';
+
+  const myToken = ++usernameCheckToken;
+  usernameCheckTimer = setTimeout(async ()=>{
+    try{
+      const result = await callScript({ action:'checkUsername', username: value });
+      if(myToken !== usernameCheckToken) return; // فيه طلب أحدث بعده، تجاهل الرد ده
+      if(result.available){
+        hintEl.textContent = '✓ الاسم متاح';
+        hintEl.className = 'field-hint available';
+      } else {
+        hintEl.textContent = '✗ الاسم ده متسجل قبل كده';
+        hintEl.className = 'field-hint taken';
+      }
+    } catch(err){
+      if(myToken !== usernameCheckToken) return;
+      hintEl.textContent = '';
+      hintEl.className = 'field-hint';
+    }
+  }, 500);
+});
+
+/* ---------------- إنشاء حساب ---------------- */
+document.getElementById('signup-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  hideBanner();
+  clearFieldErrors('signup');
+
+  const displayName = document.getElementById('signup-displayname').value.trim();
+  const username = document.getElementById('signup-username').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const confirm = document.getElementById('signup-confirm').value;
+
+  let valid = true;
+  if(displayName.length < 2 || displayName.length > 30){
+    setFieldError('signup-displayname', 'الاسم لازم يكون من 2 إلى 30 حرف');
+    valid = false;
+  }
+  if(!/^[a-zA-Z0-9_]{3,20}$/.test(username)){
+    setFieldError('signup-username', 'اسم المستخدم: حروف إنجليزية وأرقام و _ فقط، من 3 إلى 20 حرف');
+    valid = false;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    setFieldError('signup-email', 'اكتب بريد إلكتروني صحيح');
+    valid = false;
+  }
+  if(password.length < 8){
+    setFieldError('signup-password', 'لازم تكون 8 أحرف على الأقل');
+    valid = false;
+  }
+  if(password !== confirm){
+    setFieldError('signup-confirm', 'كلمة المرور وتأكيدها مش متطابقين');
+    valid = false;
+  }
+  if(!valid) return;
+
+  const form = e.target;
+  setLoading(form, true);
+  try{
+    const result = await callScript({ action:'signup', username, email, password, confirmPassword:confirm, displayName });
+    if(result.success){
+      session = { username: result.username, password, link: result.link, profilePic: result.profilePic || '', visitCount: result.visitCount || 0, displayName: result.displayName || result.username };
+      saveSession();
+      showDash();
+    } else {
+      showBanner(result.message || 'حصل خطأ أثناء إنشاء الحساب', 'error');
+    }
+  } catch(err){
+    showBanner(err.message, 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+document.getElementById('copy-link-btn').addEventListener('click', ()=>{
+  const input = document.getElementById('dash-link');
+  input.select();
+  input.setSelectionRange(0, 99999);
+  navigator.clipboard.writeText(input.value).then(()=>{
+    const btn = document.getElementById('copy-link-btn');
+    const original = btn.textContent;
+    btn.textContent = 'اتنسخ ✓';
+    setTimeout(()=> btn.textContent = original, 1500);
+  });
+});
+
+function performLogout(){
+  clearSession();
+  dash.classList.remove('show');
+  pageWrap.classList.remove('wide');
+  authView.style.display = 'block';
+  showLogin();
+  document.getElementById('login-form').reset();
+}
+
+document.getElementById('logout-btn').addEventListener('click', performLogout);
+document.getElementById('topbar-logout-btn').addEventListener('click', performLogout);
+
+/* ==================================================================
+   لوحة الإيموجي المشتركة (تستخدم في صندوق الرسالة العام وتاب الإرسال)
+   ================================================================== */
+const EMOJI_LIST = [
+  '😀','😂','🥰','😍','😘','😜','🤗','🤔','😎','🥳',
+  '😢','😭','😡','😱','😴','🤒','😇','🙄','😏','😬',
+  '👍','👎','👏','🙏','💪','🤝','✌️','🤞','👋','🙌',
+  '❤️','💔','💛','💚','💙','💜','🔥','⭐','✨','💯',
+  '😳','🤯','😅','🙃','😌','😔','🥺','😤','🤩','😐'
+];
+
+function insertAtCursor(textarea, text){
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const value = textarea.value;
+  textarea.value = value.slice(0, start) + text + value.slice(end);
+  const newPos = start + text.length;
+  textarea.focus();
+  textarea.setSelectionRange(newPos, newPos);
+}
+
+function setupEmojiPicker(textareaId, btnId, pickerId){
+  const textarea = document.getElementById(textareaId);
+  const btn = document.getElementById(btnId);
+  const picker = document.getElementById(pickerId);
+  if(!textarea || !btn || !picker) return;
+
+  if(picker.children.length === 0){
+    EMOJI_LIST.forEach(emo=>{
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = emo;
+      b.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        insertAtCursor(textarea, emo);
+        picker.classList.remove('show');
+      });
+      picker.appendChild(b);
+    });
+  }
+
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    document.querySelectorAll('.emoji-picker.show').forEach(p=>{ if(p !== picker) p.classList.remove('show'); });
+    picker.classList.toggle('show');
+  });
+
+  document.addEventListener('click', (e)=>{
+    if(!picker.contains(e.target) && e.target !== btn){
+      picker.classList.remove('show');
+    }
+  });
+}
+
+setupEmojiPicker('public-text', 'public-emoji-btn', 'public-emoji-picker');
+setupEmojiPicker('compose-text', 'compose-emoji-btn', 'compose-emoji-picker');
+
+/* ==================================================================
+   الصفحة العامة: لما حد يفتح رابط شخص تاني (?u=username)
+   بتوريله فورم إرسال رسالة صريحة + إرفاق صورة اختيارية عبر imgbb
+   ================================================================== */
+
+async function uploadToImgbb(file){
+  const base64 = await new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(',').pop());
+    reader.onerror = () => reject(new Error('تعذر قراءة الصورة'));
+    reader.readAsDataURL(file);
+  });
+
+  const formData = new FormData();
+  formData.append('image', base64);
+
+  const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+    method: 'POST',
+    body: formData
+  });
+  const data = await res.json();
+  if(data && data.success){ return data.data.url; }
+  throw new Error('تعذر رفع الصورة، حاول تاني');
+}
+
+function initPublicView(username){
+  authView.style.display = 'none';
+  dash.classList.remove('show');
+  pageWrap.classList.add('wide');
+  document.getElementById('public-view').style.display = 'block';
+
+  const loadingEl = document.getElementById('public-loading');
+  const notFoundEl = document.getElementById('public-notfound');
+  const contentEl = document.getElementById('public-content');
+
+  loadingEl.style.display = 'flex';
+  notFoundEl.style.display = 'none';
+  contentEl.style.display = 'none';
+
+  callScript({ action:'checkUsername', username }).then(result=>{
+    loadingEl.style.display = 'none';
+    if(result.exists){
+      contentEl.style.display = 'block';
+      currentPublicUsername = result.username;
+      const shownName = result.displayName || result.username;
+      document.getElementById('public-username-title').textContent = 'ابعت لـ ' + shownName;
+
+      const initial = shownName.charAt(0).toUpperCase();
+      document.getElementById('public-avatar-fallback').textContent = initial;
+      const img = document.getElementById('public-avatar-img');
+      if(result.profilePic){
+        img.src = result.profilePic; img.style.display = 'block';
+        document.getElementById('public-avatar-fallback').style.display = 'none';
+      } else {
+        img.style.display = 'none';
+        document.getElementById('public-avatar-fallback').style.display = 'block';
+      }
+
+      // تسجيل الزيارة وعرض عدد الزيارات للزائر نفسه
+      callScript({ action:'trackVisit', username: result.username }).then(vr=>{
+        if(vr && vr.success){
+          document.getElementById('public-visit-count').textContent = '👁 عدد زيارات الرابط ده: ' + vr.visitCount;
+        }
+      }).catch(()=>{});
+    } else {
+      notFoundEl.style.display = 'flex';
+    }
+  }).catch(()=>{
+    loadingEl.style.display = 'none';
+    notFoundEl.style.display = 'flex';
+  });
+}
+
+document.getElementById('public-image-input').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 5 * 1024 * 1024){
+    showPublicBanner('الصورة أكبر من 5 ميجا', 'error');
+    e.target.value = '';
+    return;
+  }
+  publicSelectedFile = file;
+  document.getElementById('public-image-name').textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    const preview = document.getElementById('public-image-preview');
+    preview.src = reader.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+function showPublicBanner(message, type){
+  const banner = document.getElementById('public-banner');
+  banner.textContent = message;
+  banner.className = 'banner show ' + type;
+}
+
+document.getElementById('public-send-btn').addEventListener('click', async ()=>{
+  const text = document.getElementById('public-text').value.trim();
+  document.getElementById('public-banner').className = 'banner';
+
+  if(!text && !publicSelectedFile){
+    showPublicBanner('اكتب رسالة أو ارفق صورة الأول', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('public-send-btn');
+  btn.disabled = true; btn.classList.add('loading');
+  try{
+    let imageUrl = '';
+    if(publicSelectedFile){
+      imageUrl = await uploadToImgbb(publicSelectedFile);
+    }
+    const result = await callScript({ action:'sendMessage', to: currentPublicUsername, text, imageUrl });
+    if(result.success){
+      showPublicBanner('تم إرسال رسالتك بنجاح ✓', 'success');
+      document.getElementById('public-text').value = '';
+      document.getElementById('public-image-preview').style.display = 'none';
+      document.getElementById('public-image-name').textContent = '';
+      document.getElementById('public-image-input').value = '';
+      publicSelectedFile = null;
+    } else {
+      showPublicBanner(result.message || 'حصل خطأ، حاول تاني', 'error');
+    }
+  } catch(err){
+    showPublicBanner(err.message || 'تعذر الإرسال', 'error');
+  } finally {
+    btn.disabled = false; btn.classList.remove('loading');
+  }
+});
+
+document.getElementById('public-back-link').addEventListener('click', ()=>{
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const base = parts.length > 0 ? '/' + parts[0] + '/' : '/';
+  window.location.href = base + 'index.html';
+});
+
+(function initApp(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const publicUsernameParam = urlParams.get('u');
+
+  if(publicUsernameParam){
+    // نظف شكل الرابط في المتصفح عشان يفضل بشكله الجميل من غير ?u=
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    const repoBase = parts.length > 0 ? '/' + parts[0] + '/' : '/';
+    window.history.replaceState(null, '', repoBase + encodeURIComponent(publicUsernameParam));
+
+    currentPublicUsername = publicUsernameParam;
+    initPublicView(publicUsernameParam);
+    return;
+  }
+
+  const stored = getStoredSession();
+  if(stored && stored.username && stored.password && stored.link){
+    session = stored;
+    showDash();
+  }
+})();
+</script>
+
+</body>
+</html>
